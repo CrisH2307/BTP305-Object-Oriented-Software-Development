@@ -15,5 +15,5 @@ Please don't just copy the code mindlessly without trying to solve the problems 
 # P/S
 All of my notes will be held on main.cpp for each week lectures =))
 
-Have a good study
+Have a good study <br>
 Crisnineball
