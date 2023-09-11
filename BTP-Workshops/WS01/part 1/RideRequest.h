@@ -13,12 +13,11 @@ I have done all the coding by myself and only copied the code that my professor 
 #define SDDS_RIDEREQUEST_H
 #include <iostream>
 using namespace std;
-namespace sdds
-{
     // Global variables for tax rate and discount
     extern double g_taxrate;
     extern double g_discount;
-
+namespace sdds
+{
     class RideRequest
     {
     private: 
