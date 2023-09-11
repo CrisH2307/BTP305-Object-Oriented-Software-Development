@@ -12,8 +12,11 @@ I have done all the coding by myself and only copied the code that my professor 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstring>
+#include <string>
 #include "RideRequest.h"
 using namespace std;
+double g_taxrate = 0.0; 
+double g_discount = 0.0; 
 namespace sdds
 {
     int RideRequest::counter = 0;
@@ -38,13 +41,13 @@ namespace sdds
 
        if (!is.fail())
        {
-            is.getline(m_customer, 11, ',');
-            is.getline(m_detail, 26, ',');
+            std::getline(is, m_customer, ',');
+            std::getline(is, m_detail, ',');
             is >> m_price;
+            is.ignore(1); // Ignore the comma
             char discountStatus;
             is >> discountStatus;
             m_discount = (discountStatus == 'Y');
-            is.ignore(); // Ignore newline character
             counter++;
        }
     }
@@ -71,12 +74,14 @@ namespace sdds
         discount applied on top for special customers. If the ride isn't discounted, then nothing is printed here.
         */
 
+       static int counter {1};
        const int COUNTER = 2;
        const int CUSTOMER_NAME = 10;
        const int RIDE_DESCRIPTION = 25;
        const int PRICE_WITH_TAX = 12;
        const int PRICE_WITH_DISCOUNT = 13;
 
+       cout.setf(ios::left);
        cout.width(COUNTER);
        cout << counter << ". ";
 
@@ -88,7 +93,7 @@ namespace sdds
        else
        {
             double priceWithTax = m_price * (1.0 + g_taxrate);
-
+   
             cout.width(CUSTOMER_NAME);
             cout << m_customer;
             cout << "|";
@@ -98,18 +103,23 @@ namespace sdds
             cout << "|";
 
             cout.width(PRICE_WITH_TAX);
+            cout << fixed;
             cout.precision(2);
             cout << priceWithTax;
+            cout << "|";
+            cout.unsetf(ios::left);
             
-            if (m_discount)
-            {
-                double priceWithDiscount = priceWithTax * (1.0 - g_discount);
-                cout << "|";
+           if (m_discount)
+           {
                 cout.setf(ios::right);
                 cout.width(PRICE_WITH_DISCOUNT);
-                cout << priceWithDiscount;
-            }
+                cout << fixed;
+                cout.precision(2);
+                cout << m_price + ((m_price * g_taxrate) - g_discount);
+                cout.unsetf(ios::right);
+           }
             cout << endl;
        }
+       counter++;
     }
 }
