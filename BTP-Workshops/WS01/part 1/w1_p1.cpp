@@ -14,7 +14,6 @@
 
 int cout = 0; // won't compile if headers don't follow convention regarding namespaces
 
-
 /* input file format: a comma separated set of fields with a consistent format of
 <Ride Order Tag>,<Customer Name>,<Ride Description>,<Rate>,<Discount Status>
 
@@ -30,8 +29,7 @@ int cout = 0; // won't compile if headers don't follow convention regarding name
 // TODO: write the prototype for the main function
 //         to accept command line arguments
 int main(int argc, char** argv)
-{
-
+{	
 	std::cout << "Command Line:\n";
 	std::cout << "--------------------------\n";
 	// TODO: print the command line here, in the format
@@ -118,5 +116,5 @@ int main(int argc, char** argv)
 		recordedRequests[i].display();
 	std::cout << "--------------------\n";
 
-	return cout;
+	return 0;
 }
