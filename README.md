@@ -13,11 +13,11 @@
 Please don't just copy the code mindlessly without trying to solve the problems yourself
 
 ## P/S
-All of my notes will be held on main.cpp for each week lectures =)))<br>
+All of my notes will be held on main.cpp for each week lectures <br>
 Also there is a practice code that I usually upload each week <br>
 
 
 
 <br><br>
 Have a good study <br>
-Crisnineball
+Crisnineball =>>
