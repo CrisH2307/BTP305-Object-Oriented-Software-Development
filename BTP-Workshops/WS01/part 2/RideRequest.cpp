@@ -22,10 +22,7 @@ namespace sdds
     int RideRequest::counter = 0;
 
 
-    RideRequest::RideRequest() : m_customer{}, m_detail{}, m_price(0.0), m_discount(false)
-    {
-
-    }
+    RideRequest::RideRequest() : m_customer(), m_detail(nullptr), m_price(0.0), m_discount(false) {}
 
     void RideRequest::read(istream& is)
     {
@@ -39,18 +36,40 @@ namespace sdds
         If the istream object is not in a good state then this function will do nothing.
         */
 
-       if (!is.fail())
-       {
-            std::getline(is, m_customer, ',');
-            std::getline(is, m_detail, ',');
-            is >> m_price;
-            is.ignore(1); // Ignore the comma
-            char discountStatus;
-            is >> discountStatus;
-            m_discount = (discountStatus == 'Y');
-            counter++;
-       }
-    }
+         // Initialize variables
+          strcpy(m_customer, ""); // Initialize m_customer to an empty string
+          char discount = 'N';    // Initialize discount to 'N' by default
+
+          // Read data from the stream
+          if (!is.fail())
+          {
+               std::string detailString;
+
+               is.getline(this->m_customer, 11, ',');
+               getline(is, detailString, ',');
+
+               if (m_detail != nullptr)
+               {
+                    delete[] m_detail;
+               }
+               m_detail = new char[detailString.length() + 1];
+               strcpy(m_detail, detailString.c_str());
+
+               is >> m_price;
+               is.ignore(1);
+
+               is.get(discount);
+
+               if (discount == 'Y')
+               {
+                    m_discount = true;
+               }
+               else if (discount == 'N')
+               {
+                    m_discount = false;
+               }
+          }
+     }
 
     void RideRequest::display() const
     {
@@ -122,4 +141,42 @@ namespace sdds
        }
        counter++;
     }
+
+    RideRequest& RideRequest::operator=(const RideRequest& that)
+    {
+          if (this != &that)
+          {
+               delete [] this->m_detail; 
+               strcpy(this->m_customer, that.m_customer); 
+               this->m_discount = that.m_discount; 
+               this->m_price = that.m_price; 
+
+
+               if (that.m_detail != nullptr)
+               {
+                    this->m_detail = new char [strlen(that.m_detail) +1]; 
+                    strcpy(this->m_detail, that.m_detail); 
+               }
+               else 
+               {
+                    this->m_detail = nullptr; 
+               }
+
+          }
+          return *this;
+    }
+
+     RideRequest::RideRequest(const RideRequest& that):  m_customer(), m_detail(nullptr), m_price(0.0), m_discount(false) 
+     {  
+          *this = that;
+     }
+
+     RideRequest::~RideRequest()
+     {
+        delete[] m_detail;
+        m_detail = nullptr;
+        m_customer[0] = '\0';
+        m_price = 0.0;
+        m_discount = false;
+     }
 }
