@@ -21,7 +21,7 @@ namespace sdds
     class RideRequest
     {
     private: 
-        std::string m_customer;
+        char m_customer[11];
         std::string m_detail;
         double m_price;
         bool m_discount;
