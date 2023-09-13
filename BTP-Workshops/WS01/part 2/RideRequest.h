@@ -22,7 +22,7 @@ namespace sdds
     {
     private: 
         char m_customer[11];
-        std::string m_detail;
+        char* m_detail;
         double m_price;
         bool m_discount;
 
