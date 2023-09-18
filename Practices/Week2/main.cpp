@@ -1,121 +1,84 @@
 #include <iostream>
-using namespace std;
-void print(int&) { cout << "rvalue\n";}
-void print(int&&) { cout << "lvalue\n";}
 
-class Numbers
-{
-    double* m_data{};
-    size_t m_cnt;
+using namespace std; 
+// type: set of possible value + operations possible on those values
+// type indicates what you can do with the variables
 
-public:
-    Numbers(size_t cnt) : m_cnt{cnt}
-    {
-        m_data = new double[m_cnt] {};
-        for (auto i = 0u; i < m_cnt; ++i)
-        {
-            m_data[i] = i + 0.5;
-        }
-    }
-    //rules of three
-    Numbers(const Numbers& that) //Must receive by a reference
-    {
-        m_data = nullptr;
-        *this = that;
-    }
-    ~Numbers()
-    {
-        delete[]m_data;
-    }
-    Numbers& operator=(const Numbers& that)
-    {
-        //1. Check for self assignment
-        if (this != &that)
-        {
-            //2. Deallocate the current instance
-            delete[] m_data;
+/*
+Fundamental type:
+_ Integer types: char   short     int     long    long long
+_ Floating point nums: float     double     long double
 
-            //3. Shallow copy
-            this->m_cnt = that.m_cnt;
+Build-in types
+_ Ptrs, array, references
 
-            //4. Deep copy
-            if (that.m_data != nullptr)
-            {
-                m_data = new double[m_cnt];
-                for (auto i = 0u; i < m_cnt; ++i)
-                {
-                    m_data[i] = that.m_data[i];
-                }
-            }
-            else
-            {
-                m_data = nullptr;
-            }
-            return *this;
-        }
-    }
-
-     // move constructor
-    Numbers(Numbers&& that)
-    {
-        *this = move(that);   // std::move() doesnt move anything
-    }
-
-    // move assignment
-    Numbers& operator=(Numbers&& that)
-    {
-        //1. Check for self assignment
-        if (this != &that)
-        {
-            //2. Deallocate the current instance
-            delete[] m_data;
-
-            //3. Shallow copy
-            this->m_cnt = that.m_cnt;
-
-            //4. Move resource
-            this->m_data = that.m_data; // or string copy
-            that.m_data = nullptr;
-            that.m_cnt = 0;
-        }
-        return *this;
-    }
-};
-
-
-
-
-
-struct Foo
+*/
+struct Foo1
 {
     double m_data = 123.321;
     operator int() const
     {
         return static_cast<int>(m_data);
     }
-    Foo(){cout << "[" << this << "] is built." << endl; }
-    ~Foo(){cout << "[" << this << "] is removed." << endl; }
+    Foo1(){cout << "[" << this << "] is built." << endl; }
+    ~Foo1(){cout << "[" << this << "] is removed." << endl; }
 
 };
 
-Foo getData()
+Foo1 getData()
 {
-    Foo aFoo;
+    Foo1 aFoo;
 
     aFoo.m_data=5;
 
     return aFoo; // a Foo is at the end of its life
 }
 
-int main (int, char**)
+using namespace std;
+
+class foo
 {
-    int data = 12;
-    print(10);          // rvalue
-    print(data);        // lvalue
-    print(Foo());
-    print(data + 10);   // rvalue: return that local variable since it isnt modified
-    print(data += 10);  // lvalue: since it is modified
-    print(++data);      // lvalue: return the current instance
-    print(data++);      // rvalue
-    return 0;
+
+};
+int main(int, char**)
+{
+    wchar_t str[] { L"HelloWorld"};
+    char16_t str1[] {u"hi"};
+    char32_t str1[] {U"hi"};
+
+    auto data = 'a';
+
+    double* p;
+
+    char* str;
+
+    int data1 = 10;
+    int data2 = 323;
+
+    // lvalue: Something that has memory
+    int& refInt = data1; 
+
+    // rvalue: A reference that are temporary
+    int&& refVal = 10; // 10 is  avalue, temporary materialization
+
+    data1 += Foo1(); // Foo1 create temp instance of type Foo1
+
+
+    //C++ doesnt allow: reference to reference, ptr to ref, array to ref
+
+    reference_wrapper<int> refArr[2]
+    {
+        std::ref(data1),std::ref(data2)
+    };
+
+    for (auto& item : refArr)
+    {
+        cout << " " << item;
+    }
+    cout << endl;
+
+
+
+
+
 }
