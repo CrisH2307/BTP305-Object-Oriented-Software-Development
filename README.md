@@ -5,7 +5,7 @@
 
 
 ## Marks secured
-    WS01: 9/10
++ WS01: 9/10
     Namespaces and Headers ➠ Never put using namespace ... in a header.
 
     Headers are included in other files; anything that exists in a header will be included. If you put a using namespace ... statement in a header, and the header gets included in some module that uses an identifier with the same name as one from the namespace, we will have ambiguity at compilation time. This ambiguity cannot be solved unless we can modify the header, which is not always possible. As such, we write the headers not to create any side-effects in files that include them.
