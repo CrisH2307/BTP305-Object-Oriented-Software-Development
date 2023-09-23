@@ -12,6 +12,9 @@
 
     The main module contained code to prevent this, but it seems to have been changed. Do not change provided code unless you are specifically instructed to do so.
 
++ WS02:
++ WS03:
+
 ### COURSE GRADE: A+
 
 # Disclaimer
