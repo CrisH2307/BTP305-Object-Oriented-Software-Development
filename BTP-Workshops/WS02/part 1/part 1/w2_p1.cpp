@@ -97,5 +97,5 @@ int main(int argc, char** argv)
     sdds::AirportLog notfound = alog2.findAirport("Ontario", "Canada");
     std::cout << "Number of airports found: " << size_t(notfound) << std::endl;
 
-    return 0;
+    return cout;
 }

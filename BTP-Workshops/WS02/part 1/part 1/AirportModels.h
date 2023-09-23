@@ -12,45 +12,45 @@ I have done all the coding by myself and only copied the code that my professor 
 #ifndef SDDS_AIRPORTMODELS_H
 #define SDDS_AIRPORTMODELS_H
 #include <iostream>
-using namespace std;
+#include <fstream>
+#include <string>
 
 namespace sdds
 {
-    struct Airport
+    class Airport
     {
-        char* a_code;
-        char* a_name;
-        char* a_city;
-        char* a_state;
-        char* a_country;
-        double a_latitude;
-        double a_longitude;
-
     public:
-        Airport();
-        Airport(const Airport& that);
-        Airport& operator=(const Airport& that);
-        ~Airport();
-        friend std::ostream& operator<<(std::ostream& os, const Airport& that);
-        operator bool()const;
+        std::string m_code{};
+        std::string m_name{};
+        std::string m_city{};
+        std::string m_state{};
+        std::string m_country{};
+        double m_latitude{};
+        double m_longitude{};
     };
+         std::ostream& operator<<(std::ostream& oo, const Airport& that);
 
 
     class AirportLog
     {
         Airport* airport;
-        size_t size;        // Number of airports currently in the log
         size_t capacity;    // Capacity of the dynamic array
 
     public:
         AirportLog();
-        AirportLog(const char* filename);
+        AirportLog(std::string filename);
+        
+         //* Rules of 5
+        AirportLog(const AirportLog &that);
+        AirportLog& operator=(const AirportLog &that);
         ~AirportLog();
+        AirportLog(AirportLog&& that);
+        AirportLog& operator=(AirportLog&& that);
+
         void addAirport(const Airport& that);
-        AirportLog findAirport(const char* state, const char* country);
+        AirportLog findAirport(std::string state, std::string country) const;
         Airport operator[](size_t index) const;
         operator size_t() const;
     };
-
 }
 #endif
