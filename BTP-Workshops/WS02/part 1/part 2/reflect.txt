@@ -1,0 +1,50 @@
+/*
+*****************************************************************************
+							  reflect.txt
+Full Name  : Cris Huynh
+Student ID#: 105444228
+Email      : xhuynh@myseneca.ca
+Course     : BTP305 NAA
+
+I have done all the coding by myself and only copied the code that my professor
+provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+1. The reason for the significant time difference between the copy and move operations.
+_ Copy (&): The data is produced as a deep copy when you conduct a copy operation. 
+This indicates that the source object's contents are copied into the target object.
+Deep copying requires copying the values from the source object and allocating new 
+memory for the data of the destination object. It can take a while to complete this 
+operation, especially for huge data structures. Additionally, complicated user-defined copy 
+constructors and assignment operators may be used during copying, which might increase overhead. 
+        AirportLog(const AirportLog& that);
+        AirportLog& operator=(const AirportLog& that);
+_ Move (&&): As opposed to copying data, a move operation moves ownership of resources from the 
+source object to the destination object. This is frequently done by "stealing" resources or internal 
+pointers from the source object. A move is often significantly faster than a copy operation because 
+no actual data copying occurs during it, especially for big data structures. Performance and effectiveness 
+of move semantics are optimised. They are made to make it possible for objects to effectively and securely 
+transmit their internal resources, such as dynamic memory.
+
+
+2. Describe approach taken to read the input file (airport_data.csv) in the AirportLog 
+constructor and populate the dynamic array. Is there any way to avoid rereading the file?
+_ In the AirportLog constructor, the process of reading and populating the dynamic array from the input file 
+'airport_data.csv' involves several steps. First, the constructor attempts to open the file and checks for success. 
+Then, it counts the number of airports in the file by reading through each line, excluding the header. The count 
+is used to allocate memory for the dynamic array. After memory allocation, the constructor resets the file position 
+and reads the actual airport data, parsing and storing it in the allocated array. Finally, the constructor closes the file. 
+Avoiding re-reading the file entirely is challenging since the count and data retrieval steps are interdependent. 
+However, if the number of airports were known in advance or provided separately, it might be possible to skip the initial 
+counting step and directly allocate memory based on the known count, saving some processing time.
+
+
+3. In the links above to chrono library, you were directed to use a steady_clock to take a timestamp. 
+Do some research and explain the difference between a steady_clock and a system_clock. Are they the same?
+When should each one be used?
+_ A steady_clock is made to offer a monotonically growing time value; as a result, it does not advance or recede as a result 
+of system time adjustments (such as manual or daylight saving time changes). It is frequently used to measure elapsed time 
+durations and intervals, particularly where accurate and reliable timekeeping is required.
+_ A system_clock indicates the present real-time as determined by the clock of the system. It might be subject to updates, 
+including time zone shifts or manually entered changes by users or administrators. It is appropriate for tasks like showing the 
+current time, planning events, or working with timestamps in log files where real-world, wall-clock time is required.
