@@ -14,6 +14,7 @@ I have done all the coding by myself and only copied the code that my professor 
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <iomanip>
 #include "Book.h"
 
 namespace sdds
@@ -83,19 +84,29 @@ namespace sdds
 
         void print(std::ostream& ooo) const
         {
+            ooo << "[";
             for (unsigned int i = 0; i < m_size; ++i)
             {
-                ooo << m_items[i] << std::endl;
+                if (i == m_size - 1)
+                {
+                    ooo << std::setprecision(1) << m_items[i];
+                }
+                else
+                {
+                    ooo << std::setprecision(1) << m_items[i] << ',';
+                }
             }
+            ooo << "]";
+            ooo << std::endl;
         }
     };
 
     // Initialize static members for any type
     template <typename T, unsigned int C>
-    T Collection<T, C>::m_smallestItem = T();
+    T Collection<T, C>::m_smallestItem = T(9999);
 
     template <typename T, unsigned int C>
-    T Collection<T, C>::m_largestItem = T();
+    T Collection<T, C>::m_largestItem = T(-9999);
 
     template <>
     Book Collection<Book, 10>::m_smallestItem = Book("", 1, 10000);
