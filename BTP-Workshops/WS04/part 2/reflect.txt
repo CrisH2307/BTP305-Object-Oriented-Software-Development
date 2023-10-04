@@ -1,0 +1,67 @@
+/*
+*****************************************************************************
+							  reflect.txt
+Full Name  : Cris Huynh
+Student ID#: 105444228
+Email      : xhuynh@myseneca.ca
+Course     : BTP305 NAA
+
+I have done all the coding by myself and only copied the code that my professor
+provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+1. The difference between the implementations of a composition and an aggregation with reference
+to the classes used in this workshop. Note that both classes CheeseShop and CheeseParty have an 
+attribute of type const Cheese** and yet they are in different relationships with class Cheese. Discuss!
+_ Composition implies a strong relationship where one class (the composite) contains another class 
+(the component) as a part. In the context of your workshop classes, if CheeseShop uses a composition 
+relationship with Cheese, it means that CheeseShop owns and manages the Cheese objects directly.
+_ Aggregation, on the other hand, is a weaker relationship where one class (the container) holds a 
+reference to another class (the content) without having ownership. The container class knows about 
+the content class, but the content class can exist independently. CheeseParty uses an aggregation 
+relationship with Cheese, it means that CheeseParty holds a reference to Cheese objects, but it doesn't 
+manage their lifecycle. CheeseParty can use and access the Cheese objects
++ Composition: CheeseShop owns and manages Cheese objects
++ Aggregation: CheeseParty holds references to Cheese objects
+
+2. The difference between the implementations of move and copy functions in a composition and an aggregation 
+with reference to the classes used in this workshop.
+* Composition --> CheeseShop module (it manages the lifetime of Cheese)
+_ Copy: Copying a composite object means creating a new object and copying the content from the source object. 
+This might involve deep-copying the resources owned by the source object, ensuring that the copied object has 
+its own independent copy of the resources.
+_ Move: When a composite object is moved, it's likely that the ownership of the contained objects is transferred to the new object
+
+* Aggregation --> CheeseParty module (it manages the lifetime of CheeseShop)
+_ Copy: Copying an object in an aggregation relationship means creating a new object and copying the reference or pointer, not the actual content. 
+This results in multiple objects sharing the same resource.
+_ Move: Moving an object in an aggregation relationship often means transferring the ownership of the references or pointers from the source object
+ to the destination object, leaving the source object in a valid but unspecified state.
+
+3. Both CheeseShop and CheeseParty classes have an addCheese function, how do they differ in implementation. Why?
+Composition signifies a strong relationship where one class directly owns and manages another class's objects, handling their creation and destruction. 
+In contrast, aggregation indicates a looser connection, where one class holds references or pointers to another class's objects without managing their 
+lifecycle. The choice between composition and aggregation depends on the desired ownership and responsibility for the objects involved. Composition 
+implies direct control, while aggregation suggests a more independent existence for the contained objects.
+
+4. The CheeseShop class doesn't have a removeCheese function like the CheeseParty does. How would you implement 
+one to keep in line with how CheeseShop handles its cheeses? What else would need to change in the project? 
+Use pseudocode to illustrate your idea.
+_ I would typically need to search for the specific cheese object within the CheeseShop and remove it from the internal collection.
+_ The removeCheese function searches through the cheeses collection of the CheeseShop class. If it finds a cheese object that matches the cheeseToRemove, 
+it removes the cheese from the internal collection and optionally deletes the removed cheese object. If the function successfully removes the cheese, 
+it returns true; otherwise, it returns false to indicate that the specified cheese was not found in the CheeseShop.
+
+    CheeseShop& removeCheese()
+    {
+        for (size_t i = 0; i < m_numCheeses; ++i) {
+            if (m_cheeses[i]->getWeight() == 0) {
+                // Delete the Cheese object with weight 0
+                delete m_cheeses[i];
+                m_cheeses[i] = nullptr;
+            }
+        }
+        return *this; // Returning a reference to the modified CheeseShop object
+    }
+
