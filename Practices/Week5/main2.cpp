@@ -46,6 +46,7 @@ enum class Order
 
 class Comparator
 {
+    private:
     Order m_order = Order::Ascending;
     int m_cnt = 0;
 public:
