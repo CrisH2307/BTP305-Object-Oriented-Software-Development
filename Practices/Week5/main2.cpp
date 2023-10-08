@@ -32,6 +32,7 @@ bool oddEven(int a, int b) {
 }
 
 //typedef bool (*compare_t) (int,int); // compare_t is an C-style alias for a ptr to a function 
+
 using comparator_t = bool(*)(int, int); // compare_t is an C-style alias for a ptr to a function 
 
 // ptr to function -- call back
