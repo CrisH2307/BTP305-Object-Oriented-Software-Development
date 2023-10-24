@@ -1,0 +1,80 @@
+/*
+*****************************************************************************
+							  reflect.txt
+Full Name  : Cris Huynh
+Student ID#: 105444228
+Email      : xhuynh@myseneca.ca
+Course     : BTP305 NAA
+
+I have done all the coding by myself and only copied the code that my professor
+provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+1. The difference between the implementations/utilizations of a functor and a lambda expression. 
+When is appropriate to use each one?
+_ Function Obj (Aka Functor) is the obj or a class instance that can be treated as it was a function.
+They are more versatile than simple function
+ex: Book thatBook;
+    thatBook(22);
+
+_ Lambda are mechanical annoymous function that can capture variables from their surrounding scope.
+They are consise and often used for short, as a simple operations. They are great for short, simple that
+don't require a seperated named function
+ex:     auto comp_lambda= [&cnt](int a, int b)-> bool {
+        cout << "Cnt [" << cnt <<  "]" << endl;
+        ++cnt;
+        return asc(a,b);
+    };
+
+
+2. The constructor for SpellChecker generates an exception in certain conditions. 
+How would you change your code to achieve the same result, but without exceptions 
+(both on the constructor and on the client side)? Compare the two solutions.
+I can modify the constructor to return a boolean flag indicating whether the file was loaded successfully or not.
+1. Using exception: handle errors and provide a clear separation between the normal flow of code and exceptional cases.
+Allow you to propagate errors up the call stack until they are caught and handled.
+SpellChecker (const char* filename)
+{
+    if (!f.is.open())
+    {
+        m_ok = false;
+        return;
+    }
+
+    m_ok = true;
+}
+
+2. Without exception: 
+Avoids the overhead associated with exception handling, which can be beneficial in performance-critical applications.
+Requires explicit checks for error conditions, making the code more verbose and potentially harder to read.
+// Client code
+int main()
+{
+    sdds::SpellChecker spellChecker("books.txt");
+
+    if (spellChecker.isValid())
+    {
+        std::string text = "Some text with misspelled words.";
+        spellChecker(text);
+        spellChecker.showStatistics(std::cout);
+    }
+    else
+    {
+        std::cout << "Error: Bad file name!" << std::endl;
+    }
+}
+
+3. The classes Movie and Book contain almost identical logic in loading data from the file. 
+How would you redesign the classes in order not to duplicate that logic?
+_ We can make the relationship for the Movie and Book logic, by adding friend class Movie in
+Book header, so that we just need to call the function then the Movie will load itself by using 
+the logic in Book
+
+4. The classes Movie and Book are instantiated from the main() function using a custom constructor, 
+but they also contain a default constructor. Is the default constructor necessary? 
+Could you remove it? Justify your answer.
+_ The default constructor is not required in this situation, particularly if you plan to always create 
+objects using the parameterized constructor. By removing the default constructor, you may enforce 
+the use of the custom constructors with useful data by preventing instances of Movie and Book from 
+being produced without the necessary setup.
