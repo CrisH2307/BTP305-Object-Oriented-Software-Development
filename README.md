@@ -18,6 +18,7 @@
 
 + WS04: 10/10
 
++ WS05: 10/10
 ### COURSE GRADE: A+
 
 # Disclaimer
