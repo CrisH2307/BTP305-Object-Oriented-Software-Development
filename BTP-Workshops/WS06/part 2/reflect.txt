@@ -1,0 +1,34 @@
+/*
+*****************************************************************************
+							  reflect.txt
+Full Name  : Cris Huynh
+Student ID#: 105444228
+Email      : xhuynh@myseneca.ca
+Course     : BTP305 NAA
+
+I have done all the coding by myself and only copied the code that my professor
+provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+1. Why do you need to deallocate the dynamically allocated memory in your vector of resources?
+_ When you allocated memory for objects in a vector. only removes the pointers, not the objects themselves. 
+By manually deallocating the memory with delete before clearing the vector, you ensure that the memory is 
+properly released, preventing your program from consuming excessive memory and potentially crashing due to 
+lack of resources.
+
+2. To call specific functions for a Directory objects stored in a Resource*, what special C++ 
+operation did you have to do and why?
+_ You have to declare a virtual function in the Resource class. It will allow you to call the
+function on a pointer of the base class type, and at runtime, the correct derived class
+function will be executed based on object's actual type
+
+3. In this workshop you had to use std::vector<sdds::Resource*> to store a collection of filesystem
+resources as pointers. Could you have used std::vector<sdds::Resource> instead? Justify your answer!
+_ It would not have been suitable for this workshop
+_ std::vector<sdds::Resource> creates of actual Resource object, not pointers. It means that the vector
+will store copies of the Resource. Since Rules Of Five of Directory has been deleted. The vector 
+will have duplicates of the original objects
+_ std::vector<sdds::Resource*> deals with original objects. You can have any modification make through
+these pointers directly affect the actual objects in memory. It provides a way to work with the same 
+objects and maintain the relationship and memory as intended.

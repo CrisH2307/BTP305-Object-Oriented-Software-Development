@@ -1,0 +1,3 @@
+﻿  CovidCollection.cpp
+C:\Users\khang\OneDrive\Tài liệu\BTP305\BTP-Workshops\WS07\WS07\w7p2\CovidCollection.cpp(256): warning C4715: '`sdds::CovidCollection::inCollection'::`2'::<lambda_1>::operator()': not all control paths return a value
+  w7p2.vcxproj -> C:\Users\khang\OneDrive\Tài liệu\BTP305\BTP-Workshops\WS07\WS07\x64\Debug\w7p2.exe
