@@ -19,7 +19,8 @@
 + WS04: 10/10
 
 + WS05: 10/10
-### COURSE GRADE: A+
+### COURSE GRADE: B+
+
 
 # Disclaimer
 Please don't just copy the code mindlessly without trying to solve the problems yourself
