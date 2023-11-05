@@ -1,6 +1,6 @@
 /*
 *****************************************************************************
-								FileSystem.cpp
+					CovidCollection.cpp
 Full Name  : Cris Huynh
 Student ID#: 105444228
 Email      : xhuynh@myseneca.ca
