@@ -1,0 +1,73 @@
+/*
+*****************************************************************************
+							  reflect.txt
+Full Name  : Cris Huynh
+Student ID#: 105444228
+Email      : xhuynh@myseneca.ca
+Course     : BTP305 NAA
+
+I have done all the coding by myself and only copied the code that my professor
+provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+1. The advantage that smart pointer syntax provides. Use example from your code to support your explanation.
++ It is unecessary to delete the memory to prevent the memory leaks. Unlike raw pointer, smart pointer automatically
+deletes itself when it goes out of scope
+Raw Ptr:
+                try
+                {
+                    copyProfile->validateAddress();
+                    result += copyProfile;
+                    delete copyProfile;
+                }
+
+Smart Ptr:
+                try
+                {
+                    copyProfile->validateAddress();
+                    result += copyProfile;
+                }
+
++ The use of std::unique_ptr conveys exclusive ownership semantics. This pointer is the sole owner 
+of the dynamically allocated Profile object, and it cannot be copied or shared directly.
+std::unique_ptr<Profile> copyProfile = std::make_unique<Profile>(allProfiles[i].m_name, allProfiles[i].m_address, allProfiles[i].m_age);
+
+
+2. The difference between raw and smart pointer syntax in your solution
+Profile* copyProfile = new Profile(allProfiles[i].m_name, allProfiles[i].m_address, allProfiles[i].m_age);
+
+delete copyProfile; // Explicitly deallocate memory
+
+std::unique_ptr<Profile> copyProfile = std::make_unique<Profile>(allProfiles[i].m_name, allProfiles[i].m_address, allProfiles[i].m_age);
+
+// No explicit delete needed; memory is automatically released when copyProfile goes out of scope
+
+3. Look at the output when the profiles are excluded using raw/smart pointers: 
+the objects are duplicated a lot of times (e.g., the object with ID 176 is duplicated into object 177; 
+then object 177 is duplicated into object 180 and 177 gets deleted; 
+object 180 is duplicated into 183 and then is deleted, etc.). 
+Explain why so many copies are created!
+Hint: Put a breakpoint into function(s) exclude... and follow the execution of your code line by line. 
+Check when the messages come into the output, and what operations trigger making so many copies.
+How would you redesign the application to reduce the number of copies that are made?
+
+_ The excessive profile copies in the current implementation stem from flawed comparison logic, inappropriate copying of profile attributes, and the usage 
+of raw pointers without proper memory management. The nested loops iterate over profiles, leading to unnecessary and incorrect comparisons based on names 
+and ages. Incorrect copying of attributes from different profiles results in the creation of erroneous duplicates
+_ When a match is not found, a new Profile object is created using raw pointers with the line 
+Profile* copyProfile = new Profile(allProfiles[i].m_name, bannedProfiles[i].m_address, bannedProfiles[i].m_age);
+This copying process, combined with the inefficient comparison logic and memory management, leads to the generation of numerous redundant and incorrect copies.
+_ To reduce the number of copies and improve the efficiency of the application, a key modification would involve replacing raw pointers 
+with smart pointers. Specifically, using std::unique_ptr for dynamically allocated Profile objects would simplify memory management and 
+eliminate the need for manual deallocation
+
+4. The class Profile doesn't provide an explicit move constructor. What happens if in the DataBase you add objects 
+into the collection attribute using std:move()? Do an experiment and report your findings.
+_ Using std::move() to add objects to the collection attribute would cause the Profile class's move constructor to be called. 
+Nevertheless, the compiler-generated move constructor would be utilized because the Profile class lacks an explicit move constructor.
+The compiler-generated move constructor moves each data member member-by-member if there isn't a custom move constructor. 
+In many cases, the default move behavior is adequate for classes that contain basic types and simple data members like std::string.
+The default move behavior may produce shallow copies if the Profile class contains resources that are managed by raw pointers, which could 
+result in problems like double deletion or resource leaks. A custom move constructor, or even better, the use of smart pointers, should be 
+used to handle ownership transfer correctly.
