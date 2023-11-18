@@ -1,0 +1,50 @@
+/*
+*****************************************************************************
+							  reflect.txt
+Full Name  : Cris Huynh
+Student ID#: 105444228
+Email      : xhuynh@myseneca.ca
+Course     : BTP305 NAA
+
+I have done all the coding by myself and only copied the code that my professor
+provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+_ From MS1 to MS3, I have learned the most important how AssemblyLine is worked.
+MS1: Laying the Foundation
++ Utilities module provides a streamlined solution for reading and extracting words from files.
++ Station module is introduced, establishing containers to store diverse data and files.
+
+MS2: Refining Order Management
++ CustomerOrder module becomes pivotal, orchestrating item management and interacting with stations. 
+Stations evolve to efficiently handle CustomerOrders. Stations, integral to the assembly line, were 
+empowered with the capability to handle CustomerOrders efficiently. This refinement strengthened the 
+relationship between orders and stations.
+
+MS3: Empowering Workstations and Line Management
++ WorkStation module inherits from Station, taking charge of CustomerOrder management and processing 
+orders in a First-In-First-Out (FIFO) manner.
++ LineManager emerges as the central command center, steering the entire system. The assembly line comprises 
+workstations, each housing specific stock items. LineManager guides customer orders through the line, 
+ensuring stations fill orders as needed. This iterative process continues until all orders are processed. 
+Incomplete orders may arise if a station depletes its inventory. The simulator provides a comprehensive summary, 
+listing completed and incomplete orders at the end.
+
+--> The assembly line's goal was to fulfill customer orders by moving them along the line, which was made up of a 
+number of workstations. Orders were processed by each station, and orders were filled according to item 
+availability. This procedure was carried out by the LineManager until every order was completed. When a 
+station's stock ran out, it meant that orders could no longer be fulfilled there. The simulator displayed a 
+thorough summary at the end, outlining both finished and unfinished orders.
+
+--> Methods that I used in MileStones:
++ Container: vector and deque
++ STL Algorithm
++ Inheritance
++ File buffering
++ Sort the station
++ Composition (Class Relationship)
++ Error Handling
++ Lambda
++ File Stream Obj
++ Raw Pointer

@@ -39,7 +39,7 @@ namespace sdds
         static size_t m_widthField;
 
     public:
-        CustomerOrder();
+        CustomerOrder() = default;
         CustomerOrder(const std::string& thatOne);
 
         //! Rules of 5

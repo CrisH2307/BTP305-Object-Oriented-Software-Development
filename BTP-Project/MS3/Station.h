@@ -13,6 +13,7 @@
 
 #include "Utilities.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 namespace sdds
 {
@@ -25,14 +26,15 @@ namespace sdds
 		size_t m_stationItem{};
 		static size_t m_widthField;
 		static size_t id_generator;
-		
+
 	public:
-		Station(std::string& thatStation);
+		Station(const std::string& thatStation);
 		const std::string& getItemName() const;
 		size_t getNextSerialNumber();
 		size_t getQuantity() const;
 		void updateQuantity();
 		void display(std::ostream& os, bool full) const;
+
 	};
 }
 

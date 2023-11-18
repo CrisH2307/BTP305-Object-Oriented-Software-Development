@@ -20,11 +20,11 @@
 using namespace std;
 namespace sdds
 {
-    std::deque<CustomerOrder> g_pending;
-    std::deque<CustomerOrder> g_completed;
-    std::deque<CustomerOrder> g_incomplete;
+    std::deque<CustomerOrder> g_pending{};
+    std::deque<CustomerOrder> g_completed{};
+    std::deque<CustomerOrder> g_incomplete{};
 
-    Workstation::Workstation(std::string& thatWorkstation) : Station(thatWorkstation), m_pNextStation(nullptr) {}
+    Workstation::Workstation(const std::string& thatWorkstation) : Station(thatWorkstation){}
 
     void Workstation::fill(std::ostream& os)
     {
@@ -35,9 +35,7 @@ namespace sdds
 
         if (not(m_order).empty())
         {
-            CustomerOrder& that = m_order.back();
-            that.fillItem(*this, os);
-            m_order.pop_back();
+            this->m_order.front().fillItem(*this, os);
         }
     }
 
@@ -51,48 +49,72 @@ namespace sdds
     g_completed or g_incomplete queue
     + if an order has been moved, return true; false otherwise.
     */
-
         bool ok = false;
-    
-        if (not(m_order).empty())
+
+        // Check if there is an order at the current station
+        if (not(this->m_order.empty()))
         {
             // Check if the order requires no more service at this station or cannot be filled
-            if (this->m_pNextStation and this->m_order.back().isItemFilled(getItemName()))
+            if (this->m_order.front().isItemFilled(this->getItemName()) or this->getQuantity() <= 0)
             {
-                // Move the order to the next station if available
-                this->m_pNextStation->operator+=(move(this->m_order.back()));
-            }
-            else if (not(m_pNextStation))
-            {
-                // If there is no next station, move the order to appropriate global queue
-                if (this->m_order.back().isItemFilled(getItemName()))
+                // Check if there is a next station
+                if (m_pNextStation)
                 {
-                    g_completed.push_back(move(this->m_order.back()));
+                    // Move the order to the next station
+                    *m_pNextStation += std::move(this->m_order.front());
+                    this->m_order.pop_front();
                 }
                 else
                 {
-                    g_incomplete.push_back(move(this->m_order.back()));
+                    // Check if the order is completed or incomplete
+                    if (this->m_order.front().isOrderFilled())
+                    {
+                        g_completed.push_back(std::move(this->m_order.front()));
+                    }
+                    else
+                    {
+                        g_incomplete.push_back(std::move(this->m_order.front()));
+                    }
+
+                    // Remove the order from the current station
+                    this->m_order.pop_front();
                 }
+
+                // Set the flag to indicate success
+                ok = true;
             }
-            // Remove the processed order from the queue
-            m_order.pop_back();
-            ok = true;
         }
-        return ok;  
+
+        // Return the result
+        return ok;
+
     }
 
     void Workstation::setNextStation(Workstation* station)
     {
+        /*
+        This modifier stores the address of the referenced Workstation object in the pointer to the 
+        m_pNextStation. Parameter defaults to nullptr.
+        */
+
         this->m_pNextStation = station;
     }
 
     Workstation* Workstation::getNextStation() const
     {
+        //todo: This query returns the address of next Workstation
         return this->m_pNextStation;
     }
 
     void Workstation::display(std::ostream& os) const
     {
+        //todo: This query inserts the name of the Item for which the current object is responsible into stream os following the format: 
+        /*
+                            ITEM_NAME --> NEXT_ITEM_NAME
+        If the current object is the last Workstation in the assembly line this query inserts: ITEM_NAME --> End of Line.
+        In either case, the message is terminated with \n
+        
+        */
         os << this->getItemName() << " --> ";
         
         if (this->m_pNextStation)
@@ -109,7 +131,8 @@ namespace sdds
 
     Workstation& Workstation::operator+=(CustomerOrder&& newOrder)
     {
-        this->m_order.push_front(move(newOrder));
+        //todo: Moves the CustomerOrder referenced in parameter newOrder to the back of the queue.
+        this->m_order.push_back(std::move(newOrder));
         return *this;
     }
 }

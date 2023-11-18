@@ -27,14 +27,14 @@ namespace sdds
     class Workstation : public Station
     {
     private:
-        std::deque<CustomerOrder> m_order;
-        Workstation* m_pNextStation;
+        std::deque<CustomerOrder> m_order{};
+        Workstation* m_pNextStation{};
 
     public:
-        Workstation(std::string& thatWorkstation);
+        Workstation(const std::string& thatWorkstation);
         void fill(std::ostream& os);
         bool attemptToMoveOrder();
-        void setNextStation(Workstation* station);
+        void setNextStation(Workstation* station = nullptr);
         Workstation* getNextStation() const;
         void display(std::ostream& os) const;
         Workstation& operator+=(CustomerOrder&& newOrder);
