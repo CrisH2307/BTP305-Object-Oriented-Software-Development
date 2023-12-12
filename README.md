@@ -27,6 +27,8 @@
 + WS08: 10/10
   
 + WS09: 10/10
+  
++ Milestones: 90/100
 
 ### COURSE GRADE: B+
 
