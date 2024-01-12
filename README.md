@@ -30,7 +30,7 @@
   
 + Milestones: 90/100
 
-### COURSE GRADE: B+
+### COURSE GRADE: A
 
 
 # Disclaimer
